@@ -55,8 +55,10 @@ function display_review_meta_box( $claim ) {
     $date = esc_html( get_post_meta( $claim->ID, 'date', true ) );
 
     $outlet = esc_html( get_post_meta( $claim->ID, 'outlet', true ) );
-    
+
     $author = esc_html( get_post_meta( $claim->ID, 'author', true ) );
+
+    $screenshot = esc_html( get_post_meta( $claim->ID, 'screenshot', true ) );
 
     $annotationsLink = esc_html( get_post_meta( $claim->ID, 'annotationsLink', true ) );
 
@@ -88,7 +90,12 @@ function display_review_meta_box( $claim ) {
             <p class="wpt-form-label wpt-form-textfield-label">Author</p>
             <input style="width: 100%" class="claimreview-meta" type="text" name="claim_author" value="<?php echo $author; ?>" />
         </div>
-        
+
+        <div class="form-group">
+            <p class="wpt-form-label wpt-form-textfield-label">Screenshot</p>
+            <input style="width: 100%" class="claimreview-meta" type="text" name="claim_screenshot" value="<?php echo $screenshot; ?>" />
+        </div>
+
         <div class="form-group">
             <p class="wpt-form-label wpt-form-textfield-label">Link to Annotations</p>
             <input style="width: 100%" class="claimreview-meta" type="text" name="claim_annotations" value="<?php echo $annotationsLink; ?>" />
@@ -136,7 +143,11 @@ function add_review_fields( $claim_id, $claim ) {
         if ( isset( $_POST['claim_author'] ) && $_POST['claim_author'] != '' ) {
             update_post_meta( $claim_id, 'author', $_POST['claim_author'] );
         }
-        
+
+        if ( isset( $_POST['claim_screenshot'] ) && $_POST['claim_screenshot'] != '' ) {
+            update_post_meta( $claim_id, 'screenshot', $_POST['claim_screenshot'] );
+        }
+
         if ( isset( $_POST['claim_annotations'] ) && $_POST['claim_annotations'] != '' ) {
             update_post_meta( $claim_id, 'annotationsLink', $_POST['claim_annotations'] );
         }
@@ -160,11 +171,11 @@ function claimreviewsLoop( $atts ) {
         "category" => '',
         'type' => 'claimreview',
     ), $atts ) );
-        
+
     //Extract ID from category name
     $theCatId = get_term_by( 'slug', $category, 'category' );
     $theCatId = $theCatId->term_id;
-    
+
     $output = '';
     $paged = ( get_query_var('page') ) ? get_query_var('page') : 1;
     $args = array(
