@@ -4,7 +4,7 @@ Plugin Name: Claim-Reviews
 Plugin URI: https://github.com/ClimateFeedback/Claim-Reviews
 Description: Create post types for sentence-level claim reviews.
 Version: 0.1
-Author: Emmanuel Vincent
+Author: Emmanuel Vincent, Erwan Ledoux
 License: BSD
 License URI: https://www.freebsd.org/copyright/freebsd-license.html
 */

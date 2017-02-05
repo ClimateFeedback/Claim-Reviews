@@ -51,6 +51,8 @@ add_action( 'admin_init', 'claimreviews_admin' );
 function display_review_meta_box( $claim ) {
 
     $claimshort = esc_html( get_post_meta( $claim->ID, 'claimshort', true ) );
+    
+    $claimfull = esc_html( get_post_meta( $claim->ID, 'claimfull', true ) );
 
     $date = esc_html( get_post_meta( $claim->ID, 'date', true ) );
 
@@ -76,6 +78,11 @@ function display_review_meta_box( $claim ) {
             <input style="width: 100%" class="claimreview-meta" type="text" name="claim_short" value="<?php echo $claimshort; ?>" />
         </div>
 
+        <div class="form-group">
+            <p class="wpt-form-label wpt-form-textfield-label">Claim Full</p>
+            <input style="width: 100%" class="claimreview-meta" type="text" name="claim_full" value="<?php echo $claimfull; ?>" />
+        </div>
+        
         <div class="form-group">
             <p class="wpt-form-label wpt-form-textfield-label">Claim Date</p>
             <input style="width: 100%" class="claimreview-meta" type="text" name="claim_date" value="<?php echo $date; ?>" />
@@ -130,6 +137,10 @@ function add_review_fields( $claim_id, $claim ) {
 
         if ( isset( $_POST['claim_short'] ) && $_POST['claim_short'] != '' ) {
             update_post_meta( $claim_id, 'claimshort', $_POST['claim_short'] );
+        }
+        
+        if ( isset( $_POST['claim_full'] ) && $_POST['claim_full'] != '' ) {
+            update_post_meta( $claim_id, 'claimfull', $_POST['claim_full'] );
         }
 
         if ( isset( $_POST['claim_date'] ) && $_POST['claim_date'] != '' ) {
