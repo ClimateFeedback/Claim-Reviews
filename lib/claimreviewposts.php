@@ -201,20 +201,15 @@ function claimreviewsLoop( $atts ) {
 
     while ( $yo_quiery->have_posts() ) : $yo_quiery->the_post();
         $output .= '<div class="row">
-            <div class="media-left hidden-xs">
-                <a class="postpic" href="'. get_permalink( get_the_ID() ) .'">
-                    '. types_render_field( "front-image", array( "width" => "275", "height" => "176", "proportional" => "true" ) ) .'
+            <div class="media-left">
+                <a class="tagpic" href="'. get_permalink( get_the_ID() ) .'">
+                    '. types_render_field( "front-image", array( "width" => "160", "height" => "102", "proportional" => "true" ) ) .'
                 </a>
             </div>
             <div class="media-body">
-                <a class="strong" href="'. get_permalink( get_the_ID() ) .'">
-                    <h3 class="noborder">'. get_the_title() .'</h3>
-                </a>
-                <h4 class="noborder"><span style="font-weight:normal; font-size-adjust: 0.5;">Claimed in</span> '. get_post_meta( get_the_ID(), 'outlet', true ) .', <span style="font-weight:normal; font-size-adjust: 0.5;">by</span> '. get_post_meta( get_the_ID(), 'author', true ) .'</h4>
-                <p class="small">
-                    <span>'. get_post_meta( get_the_ID(), 'date', true ) .'</span>
-                </p>
-                <p><em>'. get_the_excerpt() .'</em></p>
+                <p class="spaceup">'. get_post_meta( get_the_ID(), 'author', true ) .'<span style="font-weight:normal; font-size-adjust: 0.5;"> in</span> '. get_post_meta( get_the_ID(), 'outlet', true ) .': </p>
+                 <blockquote><em>"'. get_post_meta( get_the_ID(), 'claimshort', true ) .'"</em></blockquote>
+               <a class="postpic" href="'. get_permalink( get_the_ID() ) .'"> <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i> <b>'. get_post_meta( get_the_ID(), 'takeaway', true ) .'</b> </a>
             </div>
         </div>
         <hr/>';
