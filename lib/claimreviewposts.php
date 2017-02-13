@@ -179,21 +179,14 @@ function add_review_fields( $claim_id, $claim ) {
 
 function claimreviewsLoop( $atts ) {
     extract( shortcode_atts( array(
-        "category" => '',
         'type' => 'claimreview',
     ), $atts ) );
-
-    //Extract ID from category name
-    $theCatId = get_term_by( 'slug', $category, 'category' );
-    $theCatId = $theCatId->term_id;
-
     $output = '';
     $paged = ( get_query_var('page') ) ? get_query_var('page') : 1;
     $args = array(
         // 'post_parent' => $parent,
         'post_type' => $type,
         'sort_column'   => 'menu_order',
-        'cat' => $theCatId,
         'posts_per_page' => 10,
         'paged' => $paged
     );
