@@ -121,7 +121,7 @@ function display_review_meta_box( $claim ) {
 
         <div class="form-group">
             <p class="wpt-form-label wpt-form-textfield-label">Takeaway</p>
-            <p><em>example:.</em></p>
+            <p><em></em></p>
             <input style="width: 100%" class="claimreview-meta" type="text" name="claim_takeaway" value="<?php echo $takeaway; ?>" />
         </div>
     </div>
@@ -196,17 +196,16 @@ function claimreviewsLoop( $atts ) {
         $output .= '<div class="row">
         <a href="'. get_permalink( get_the_ID() ) .'"> <h3>'. get_the_title() .'</h3> </a>
             <div class="media-left">
-                <a class="tagpic" href="'. get_permalink( get_the_ID() ) .'">
-                    '. types_render_field( "front-image", array( "width" => "160", "proportional" => "true" ) ) .'
+              <a class="tagpic" href="'. get_permalink( get_the_ID() ) .'">
+              <img src="' . get_post_meta( get_the_ID(), 'screenshot', true). '">
                 </a>
             </div>
             <div class="media-body">
-                <p class="small">
-                    <span>'. get_post_meta( get_the_ID(), 'date', true ) .'</span>
-                </p>
                 <p>'. get_post_meta( get_the_ID(), 'author', true ) .'<span style="font-weight:normal; font-size-adjust: 0.5;"> in</span> '. get_post_meta( get_the_ID(), 'outlet', true ) .': </p>
                  <blockquote><em>"'. get_post_meta( get_the_ID(), 'claimshort', true ) .'"</em></blockquote>
-               
+                 <p class="small">
+                    <span class="square-btn">— '. get_the_date( 'd M Y' ) .'</span>
+                 </p>
             </div>
         </div>
         <hr/>';
