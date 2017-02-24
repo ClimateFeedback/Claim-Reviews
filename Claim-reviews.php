@@ -9,6 +9,7 @@ License: BSD
 License URI: https://www.freebsd.org/copyright/freebsd-license.html
 */
 
+  require_once('lib/articlereviewposts.php');      // Article reviews custom post type
   require_once('lib/claimreviewposts.php');      // Claim reviews custom post type
 
 ?>
