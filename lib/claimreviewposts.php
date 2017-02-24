@@ -40,7 +40,7 @@ add_action( 'init', 'create_claimreviews' );
 function claimreviews_admin() {
     add_meta_box( 'claim_meta_box',
         'Claim Reviews Details',
-        'display_review_meta_box',
+        'display_claim_review_meta_box',
         'claimreview', 'normal', 'high'
     );
 }
@@ -48,10 +48,10 @@ function claimreviews_admin() {
 add_action( 'admin_init', 'claimreviews_admin' );
 
 
-function display_review_meta_box( $claim ) {
+function display_claim_review_meta_box( $claim ) {
 
     $claimshort = esc_html( get_post_meta( $claim->ID, 'claimshort', true ) );
-    
+
     $claimfull = esc_html( get_post_meta( $claim->ID, 'claimfull', true ) );
 
     $date = esc_html( get_post_meta( $claim->ID, 'date', true ) );
@@ -82,7 +82,7 @@ function display_review_meta_box( $claim ) {
             <p class="wpt-form-label wpt-form-textfield-label">Claim Full</p>
             <input style="width: 100%" class="claimreview-meta" type="text" name="claim_full" value="<?php echo $claimfull; ?>" />
         </div>
-        
+
         <div class="form-group">
             <p class="wpt-form-label wpt-form-textfield-label">Claim Date</p>
             <input style="width: 100%" class="claimreview-meta" type="text" name="claim_date" value="<?php echo $date; ?>" />
@@ -128,17 +128,17 @@ function display_review_meta_box( $claim ) {
 
 <?php }
 
-add_action( 'save_post', 'add_review_fields', 10, 2 );
+add_action( 'save_post', 'add_claim_review_fields', 10, 2 );
 
 
-function add_review_fields( $claim_id, $claim ) {
+function add_claim_review_fields( $claim_id, $claim ) {
     if ( $claim->post_type == 'claimreview' ) {
         // Store data in post meta table if present in post data
 
         if ( isset( $_POST['claim_short'] ) && $_POST['claim_short'] != '' ) {
             update_post_meta( $claim_id, 'claimshort', $_POST['claim_short'] );
         }
-        
+
         if ( isset( $_POST['claim_full'] ) && $_POST['claim_full'] != '' ) {
             update_post_meta( $claim_id, 'claimfull', $_POST['claim_full'] );
         }
@@ -199,7 +199,7 @@ function claimreviewsLoop( $atts ) {
               <a class="tagpic" href="'. get_permalink( get_the_ID() ) .'">
                <img
                 src="'. get_site_url(). '/wp-content/uploads/tags/TagH_'. get_post_meta( get_the_ID(), 'verdict', true).'.png"
-              > 
+              >
                 </a>
             </div>
             <div class="media-body">
@@ -218,7 +218,46 @@ function claimreviewsLoop( $atts ) {
 }
 add_shortcode('claimreviews-loop', 'claimreviewsLoop');
 
+function latestclaimreviewsLoop( $atts ) {
+    extract( shortcode_atts( array(
+        'type' => 'claimreview',
+    ), $atts ) );
+    $output = '';
+    $paged = ( get_query_var('page') ) ? get_query_var('page') : 1;
+    $args = array(
+        // 'post_parent' => $parent,
+        'post_type' => $type,
+        'sort_column'   => 'menu_order',
+        'posts_per_page' => 10,
+        'paged' => $paged
+    );
+    $yo_quiery = new WP_Query( $args );
 
+    while ( $yo_quiery->have_posts() ) : $yo_quiery->the_post();
+        $output .= '<div class="row">
+        <a href="'. get_permalink( get_the_ID() ) .'"> <h3>'. get_the_title() .'</h3> </a>
+            <div class="media-left">
+              <a class="tagpic" href="'. get_permalink( get_the_ID() ) .'">
+               <img
+                src="'. get_site_url(). '/wp-content/uploads/tags/TagH_'. get_post_meta( get_the_ID(), 'verdict', true).'.png"
+              >
+                </a>
+            </div>
+            <div class="media-body">
+                <p>'. get_post_meta( get_the_ID(), 'author', true ) .'<span style="font-weight:normal; font-size-adjust: 0.5;"> in</span> '. get_post_meta( get_the_ID(), 'outlet', true ) .': </p>
+                 <blockquote><em>"'. get_post_meta( get_the_ID(), 'claimshort', true ) .'"</em></blockquote>
+                 <p class="small">
+                    <span class="square-btn">— '. get_the_date( 'd M Y' ) .'</span>
+                 </p>
+            </div>
+        </div>
+        <hr/>';
+    endwhile;
+
+    wp_reset_query();
+    return $output;
+}
+add_shortcode('latest-claimreviews-loop', 'latestclaimreviewsLoop');
 
 function claimreview_pagination( $atts ) {
     extract( shortcode_atts( array(
