@@ -14,7 +14,6 @@ function create_claimreviews() {
         'not_found' => 'No Claim-Reviews found',
         'not_found_in_trash' => 'No Claim-Reviews found in Trash'
     );
-
     $args = array(
         'labels' => $labels,
         'public' => true,
@@ -27,11 +26,13 @@ function create_claimreviews() {
         'has_archive' => true,
         'hierarchical' => false,
         'menu_position' => 4,
+        'show_in_rest' => true,
+        // then api is available at <url>/wp-json/wp/v2/claimreviews
+  		  'rest_base' => 'claimreviews',
         'taxonomies' => array( 'category', 'post_tag' ),
         'supports' => array( 'title', 'thumbnail', 'excerpt', 'editor', 'revisions', 'claimreviews_admin' )
     );
-
-    register_post_type( 'claimreview', $args);
+    register_post_type('claimreview', $args);
 }
 
 add_action( 'init', 'create_claimreviews' );
@@ -51,7 +52,7 @@ add_action( 'admin_init', 'claimreviews_admin' );
 function display_review_meta_box( $claim ) {
 
     $claimshort = esc_html( get_post_meta( $claim->ID, 'claimshort', true ) );
-    
+
     $claimfull = esc_html( get_post_meta( $claim->ID, 'claimfull', true ) );
 
     $date = esc_html( get_post_meta( $claim->ID, 'date', true ) );
@@ -82,7 +83,7 @@ function display_review_meta_box( $claim ) {
             <p class="wpt-form-label wpt-form-textfield-label">Claim Full</p>
             <input style="width: 100%" class="claimreview-meta" type="text" name="claim_full" value="<?php echo $claimfull; ?>" />
         </div>
-        
+
         <div class="form-group">
             <p class="wpt-form-label wpt-form-textfield-label">Claim Date</p>
             <input style="width: 100%" class="claimreview-meta" type="text" name="claim_date" value="<?php echo $date; ?>" />
@@ -138,7 +139,7 @@ function add_review_fields( $claim_id, $claim ) {
         if ( isset( $_POST['claim_short'] ) && $_POST['claim_short'] != '' ) {
             update_post_meta( $claim_id, 'claimshort', $_POST['claim_short'] );
         }
-        
+
         if ( isset( $_POST['claim_full'] ) && $_POST['claim_full'] != '' ) {
             update_post_meta( $claim_id, 'claimfull', $_POST['claim_full'] );
         }
@@ -199,7 +200,7 @@ function claimreviewsLoop( $atts ) {
               <a class="tagpic" href="'. get_permalink( get_the_ID() ) .'">
                <img
                 src="'. get_site_url(). '/wp-content/uploads/tags/TagH_'. get_post_meta( get_the_ID(), 'verdict', true).'.png"
-              > 
+              >
                 </a>
             </div>
             <div class="media-body">
