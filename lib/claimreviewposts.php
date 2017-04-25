@@ -198,7 +198,7 @@ function claimreviewsLoop( $atts ) {
             <div class="media-left">
               <a class="tagpic" href="'. get_permalink( get_the_ID() ) .'">
                <img
-                src="'. get_site_url(). '/wp-content/uploads/tags/TagH_'. get_post_meta( get_the_ID(), 'verdict', true).'.png"
+                src="'. get_site_url(). '/wp-content/uploads/tags/HTag_'. get_post_meta( get_the_ID(), 'verdict', true).'.png"
               > 
                 </a>
             </div>
