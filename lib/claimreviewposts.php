@@ -66,6 +66,8 @@ function display_review_meta_box( $claim ) {
 
     $verdict = esc_html( get_post_meta( $claim->ID, 'verdict', true ) );
 
+    $rating = esc_html( get_post_meta( $claim->ID, 'rating', true ) );
+
     $details = esc_html( get_post_meta( $claim->ID, 'details', true ) );
 
     $takeaway = esc_html( get_post_meta( $claim->ID, 'takeaway', true ) );
@@ -111,6 +113,11 @@ function display_review_meta_box( $claim ) {
         <div class="form-group">
             <p class="wpt-form-label wpt-form-textfield-label">Claim verdict</p>
             <input style="width: 100%" class="claimreview-meta" type="text" name="claim_verdict" value="<?php echo $verdict; ?>" />
+        </div>
+        
+        <div class="form-group">
+            <p class="wpt-form-label wpt-form-textfield-label">Claim rating</p>
+            <input style="width: 100%" class="claimreview-meta" type="text" name="claim_rating" value="<?php echo $rating; ?>" />
         </div>
 
         <div class="form-group">
@@ -167,6 +174,10 @@ function add_review_fields( $claim_id, $claim ) {
             update_post_meta( $claim_id, 'verdict', $_POST['claim_verdict'] );
         }
 
+        if ( isset( $_POST['claim_rating'] ) && $_POST['claim_rating'] != '' ) {
+            update_post_meta( $claim_id, 'rating', $_POST['claim_rating'] );
+        }
+        
         if ( isset( $_POST['claim_details'] ) && $_POST['claim_details'] != '' ) {
             update_post_meta( $claim_id, 'details', $_POST['claim_details'] );
         }
