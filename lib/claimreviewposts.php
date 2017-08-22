@@ -203,27 +203,11 @@ function claimreviewsLoop( $atts ) {
     );
     $yo_quiery = new WP_Query( $args );
 
-    while ( $yo_quiery->have_posts() ) : $yo_quiery->the_post();
-        $output .= '<div class="row">
-        <a href="'. get_permalink( get_the_ID() ) .'"> <h3>'. get_the_title() .'</h3> </a>
-            <div class="media-left">
-              <a class="tagpic" href="'. get_permalink( get_the_ID() ) .'">
-               <img
-                src="'. get_site_url(). '/wp-content/uploads/tags/HTag_'. get_post_meta( get_the_ID(), 'verdict', true).'.png"
-              > 
-                </a>
-            </div>
-            <div class="media-body">
-                <p>'. get_post_meta( get_the_ID(), 'author', true ) .'<span style="font-weight:normal; font-size-adjust: 0.5;"> in</span> '. get_post_meta( get_the_ID(), 'outlet', true ) .': </p>
-                 <blockquote><em>"'. get_post_meta( get_the_ID(), 'claimshort', true ) .'"</em></blockquote>
-                 <p class="small">
-                    <span class="square-btn">— '. get_the_date( 'd M Y' ) .'</span>
-                 </p>
-            </div>
-        </div>
-        <hr/>';
-    endwhile;
-
+   
+    while ($yo_quiery->have_posts() ) : $yo_quiery->the_post(); 
+    get_template_part('templates/loop-claimreviews'); 
+    endwhile; 
+        
     wp_reset_query();
     return $output;
 }
