@@ -28,7 +28,7 @@ function create_claimreviews() {
         'hierarchical' => false,
         'menu_position' => 4,
         'taxonomies' => array( 'category', 'post_tag' ),
-        'supports' => array( 'title', 'thumbnail', 'excerpt', 'editor', 'revisions', 'claimreviews_admin' )
+        'supports' => array( 'title', 'thumbnail', 'excerpt', 'editor', 'revisions', 'claimreviews_admin', 'author' )
     );
 
     register_post_type( 'claimreview', $args);
