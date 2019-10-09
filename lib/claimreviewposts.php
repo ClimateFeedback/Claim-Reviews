@@ -250,5 +250,5 @@ function claimreview_pagination( $atts ) {
     return paginate_links( $pagination );
 }
 add_shortcode('paginate-claimreview', 'claimreview_pagination');
-
+ 
 ?>
