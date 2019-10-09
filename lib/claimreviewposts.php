@@ -71,6 +71,9 @@ function display_review_meta_box( $claim ) {
     $details = esc_html( get_post_meta( $claim->ID, 'details', true ) );
 
     $takeaway = esc_html( get_post_meta( $claim->ID, 'takeaway', true ) );
+    
+    $repeat_urls = esc_html( get_post_meta( $claim->ID, 'repeat_urls', true ) );
+
 
     ?>
 
@@ -131,6 +134,13 @@ function display_review_meta_box( $claim ) {
             <p><em></em></p>
             <input style="width: 100%" class="claimreview-meta" type="text" name="claim_takeaway" value="<?php echo $takeaway; ?>" />
         </div>
+        
+        <div class="form-group">
+            <p class="wpt-form-label wpt-form-textfield-label">Repeat URLs</p>
+            <p><em></em></p>
+            <textarea style="width: 100%" class="claimreview-meta" rows="5" name="claim_repeat_urls" id="claim_repeat_urls"><?php echo $repeat_urls; ?></textarea>
+        </div>
+
     </div>
 
 <?php }
@@ -185,6 +195,10 @@ function add_review_fields( $claim_id, $claim ) {
         if ( isset( $_POST['claim_takeaway'] ) && $_POST['claim_takeaway'] != '' ) {
             update_post_meta( $claim_id, 'takeaway', $_POST['claim_takeaway'] );
         }
+        
+        if ( isset( $_POST['claim_repeat_urls'] ) && $_POST['claim_repeat_urls'] != '' ) {
+            update_post_meta( $claim_id, 'repeat_urls', $_POST['claim_repeat_urls'] );
+        }        
     }
 }
 
@@ -250,5 +264,5 @@ function claimreview_pagination( $atts ) {
     return paginate_links( $pagination );
 }
 add_shortcode('paginate-claimreview', 'claimreview_pagination');
- 
+
 ?>
